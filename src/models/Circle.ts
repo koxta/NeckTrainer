@@ -5,12 +5,13 @@ export default class Circle {
 	coords: Coords;
 	constructor(radius: number, posX: number, posY: number) {
 		this.radius = radius;
-		this.coords.x = posX;
-		this.coords.y = posY;
+		this.coords = {
+			x: posX,
+			y: posY
+		};
 	}
 
 	draw = () => {
-		p5.fill(255, 0, 0);
 		p5.ellipse(this.coords.x, this.coords.y, this.radius * 2);
 	};
 
@@ -18,4 +19,18 @@ export default class Circle {
 		this.coords.x = x;
 		this.coords.y = y;
 	};
+
+	isColliding(circle: Circle) {
+		const collidingDistance = this.radius + circle.radius;
+		const distance = p5.dist(
+			this.coords.x,
+			this.coords.y,
+			circle.coords.x,
+			circle.coords.y
+		);
+		if (distance <= collidingDistance) {
+			return true;
+		}
+		return false;
+	}
 }
